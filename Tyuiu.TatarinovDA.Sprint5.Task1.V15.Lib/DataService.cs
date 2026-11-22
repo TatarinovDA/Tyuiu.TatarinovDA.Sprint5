@@ -1,4 +1,5 @@
 ﻿using System.Xml;
+using System.Text;
 using tyuiu.cources.programming.interfaces.Sprint5;
 namespace Tyuiu.TatarinovDA.Sprint5.Task1.V15.Lib
 {
@@ -7,12 +8,13 @@ namespace Tyuiu.TatarinovDA.Sprint5.Task1.V15.Lib
         public string SaveToFileTextData(int startValue, int stopValue)
         {
             string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
-            using (StreamWriter writer = new StreamWriter(path))
+            StringBuilder sb = new StringBuilder();
             {
                 for (int x = startValue; x <= stopValue; x++)
                 {
                     double denominator = x - 0.4;
                     double result = 0;
+                    
                     if (denominator == 0)
                     {
                         result = 0;
@@ -26,10 +28,16 @@ namespace Tyuiu.TatarinovDA.Sprint5.Task1.V15.Lib
                         result = 0;
                     }
                     result = Math.Round(result, 2);
-                    writer.WriteLine($"{x}\t{result.ToString(System.Globalization.CultureInfo.InvariantCulture)}");
+                    sb.AppendLine(result.ToString());
+                    if (x < stopValue)
+                    {
+                        sb.Append("\n");
+                    } 
                 }
+                File.WriteAllText(path, sb.ToString());
+                return path;
             }
-            return path;
+            
         }
     }
 }
