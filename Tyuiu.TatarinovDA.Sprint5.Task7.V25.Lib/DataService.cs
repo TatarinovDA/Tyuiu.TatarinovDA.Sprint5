@@ -10,11 +10,11 @@ namespace Tyuiu.TatarinovDA.Sprint5.Task7.V25.Lib
         {
             string content = File.ReadAllText(path);
 
-            string result = Regex.Replace(content, @"\s*\b[a-zA-Z]+\b\s*", " ").Trim();
+            string result = Regex.Replace(content, "[a-zA-Z]+", "").Trim();
+            result = Regex.Replace(result, @" +([.,!?])", "$1");
+            result = Regex.Replace(result, @" {2,}", " ");
 
-            string tempPath = Path.GetTempPath();
-            string outFileName = "OutPutDataFileTask7V25.txt";
-            string outFilePath = Path.Combine(tempPath, outFileName);
+            string outFilePath = Path.Combine(Path.GetTempPath(), "OutPutDataFileTask7V25.txt");
 
             File.WriteAllText(outFilePath, result);
 
